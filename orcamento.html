@@ -1,0 +1,36 @@
+<h2>Solicitação de Compra</h2>
+
+<input type="text" id="numeroPedido" placeholder="Número do Pedido">
+<input type="text" id="obra" placeholder="Nome da Obra">
+
+<input type="date" id="dataInicio">
+<input type="date" id="dataFim">
+
+<hr>
+
+<input type="text" id="produto" oninput="filtrarProdutos()" placeholder="Produto">
+<div id="listaProdutos"></div>
+
+<input type="text" id="codigo" readonly placeholder="Código">
+<input type="number" id="quantidade" placeholder="Quantidade">
+<input type="text" id="obs" placeholder="Observação">
+
+<button onclick="adicionarItem()">Adicionar Item</button>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th>Obs</th>
+        </tr>
+    </thead>
+    <tbody id="tabelaItens"></tbody>
+</table>
+
+<br>
+
+<button onclick="enviarOrcamento()">Enviar Orçamento</button>
+
+<script src="script.js"></script>
