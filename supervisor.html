@@ -1,12 +1,28 @@
-<h2>Orçamentos Recebidos</h2>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supervisor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 
-<div id="listaOrcamentos"></div>
+<body>
 
-<button onclick="limparOrcamentos()">Resetar Dados</button>
+<header class="top-bar">
+    <span>Orçamentos Recebidos</span>
+</header>
+
+<main>
+    <div id="listaOrcamentos"></div>
+    <br>
+    <button onclick="limparOrcamentos()">Resetar Dados</button>
+</main>
 
 <script src="script.js"></script>
-
-
 <script>
     window.onload = mostrarOrcamentos;
 </script>
+
+</body>
+</html>

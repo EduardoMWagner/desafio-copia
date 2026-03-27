@@ -1,225 +1,158 @@
-// USUÁRIOS
-const usuarios = [
-    {usuario:"engenheiro1", senha:"123", tipo:"usuario"},
-    {usuario:"engenheiro2", senha:"123", tipo:"usuario"},
-    {usuario:"supervisor", senha:"123", tipo:"supervisor"}
-]
-
-// LOGIN
-function login(){
-    let usuarioDigitado = document.getElementById("usuario").value
-    let senhaDigitada = document.getElementById("senha").value
-
-    let usuarioEncontrado = usuarios.find(user =>
-        user.usuario === usuarioDigitado && user.senha === senhaDigitada
-    )
-
-    if(usuarioEncontrado){
-        if(usuarioEncontrado.tipo === "supervisor"){
-            window.location.href = "supervisor.html"
-        }else{
-            window.location.href = "orcamento.html"
-        }
-    }else{
-        alert("Usuário ou senha incorretos")
-    }
-}
-
+// ============================
 // PRODUTOS
+// ============================
 const produtos = [
-{codigo:"001", nome:"Cimento CP II"},
-{codigo:"002", nome:"Areia Média"},
-{codigo:"003", nome:"Brita 1"},
-{codigo:"004", nome:"Tijolo Cerâmico"},
-{codigo:"005", nome:"Argamassa"},
-{codigo:"006", nome:"Arame"},
-{codigo:"007", nome:"Aço CA50"}
-]
+    { nome: "Cimento", codigo: "001", unidade: "SC" },
+    { nome: "Areia", codigo: "002", unidade: "M3" },
+    { nome: "Brita", codigo: "003", unidade: "M3" },
+    { nome: "Tijolo", codigo: "004", unidade: "UN" }
+];
 
-let itensOrcamento = []
+let itens = [];
 
-// AUTOCOMPLETE
-function filtrarProdutos(){
-    let texto = document.getElementById("produto").value.toLowerCase()
-    let lista = document.getElementById("listaProdutos")
-    lista.innerHTML = ""
+// ============================
+// BUSCAR POR CÓDIGO
+// ============================
+function buscarPorCodigo() {
+    const codigo = document.getElementById("codigo").value;
 
-    if(texto === "") return
+    const produtoEncontrado = produtos.find(p => p.codigo === codigo);
 
-    let resultados = produtos.filter(produto =>
-        produto.nome.toLowerCase().includes(texto)
-    )
-
-    resultados.forEach(produto => {
-        let item = document.createElement("div")
-        item.textContent = `${produto.nome} (${produto.codigo})`
-        item.onclick = function(){
-            document.getElementById("produto").value = produto.nome
-            document.getElementById("codigo").value = produto.codigo
-            lista.innerHTML = ""
-        }
-        lista.appendChild(item)
-    })
+    if (produtoEncontrado) {
+        document.getElementById("produto").value = produtoEncontrado.nome;
+        document.getElementById("unidade").value = produtoEncontrado.unidade;
+    }
 }
 
-// ADICIONAR ITEM
-function adicionarItem(){
-    let codigo = document.getElementById("codigo").value
-    let produto = document.getElementById("produto").value
-    let quantidade = document.getElementById("quantidade").value
-    let obs = document.getElementById("obs").value
+// ============================
+// FILTRO POR NOME
+// ============================
+function filtrarProdutos() {
+    const input = document.getElementById("produto").value.toLowerCase();
+    const lista = document.getElementById("listaProdutos");
 
-    if(!produto || !quantidade){
-        alert("Preencha produto e quantidade")
-        return
+    lista.innerHTML = "";
+
+    produtos
+        .filter(p => p.nome.toLowerCase().includes(input))
+        .forEach(p => {
+            const div = document.createElement("div");
+            div.textContent = p.nome;
+            div.onclick = () => selecionarProduto(p);
+            lista.appendChild(div);
+        });
+}
+
+// ============================
+// SELECIONAR PRODUTO
+// ============================
+function selecionarProduto(produto) {
+    document.getElementById("produto").value = produto.nome;
+    document.getElementById("codigo").value = produto.codigo;
+    document.getElementById("unidade").value = produto.unidade;
+
+    document.getElementById("listaProdutos").innerHTML = "";
+}
+
+// ============================
+// ADICIONAR ITEM
+// ============================
+function adicionarItem() {
+    const codigo = document.getElementById("codigo").value;
+    const produto = document.getElementById("produto").value;
+    const unidade = document.getElementById("unidade").value;
+    const quantidade = document.getElementById("quantidade").value;
+    const obs = document.getElementById("obs").value;
+
+    if (!codigo || !produto || !quantidade) {
+        alert("Preencha os campos do item!");
+        return;
     }
 
-    itensOrcamento.push({codigo, produto, quantidade, observacao: obs})
+    const item = {
+        id: crypto.randomUUID(),
+        numero: itens.length + 1,
+        codigo,
+        produto,
+        unidade,
+        quantidade,
+        obs
+    };
 
-    atualizarTabela()
-    limparCampos()
+    itens.push(item);
+    atualizarTabela();
+    limparCamposItem();
 }
 
-// TABELA
-function atualizarTabela(){
-    let tabela = document.getElementById("tabelaItens")
-    tabela.innerHTML = ""
+// ============================
+// LIMPAR CAMPOS
+// ============================
+function limparCamposItem() {
+    document.getElementById("codigo").value = "";
+    document.getElementById("produto").value = "";
+    document.getElementById("unidade").value = "";
+    document.getElementById("quantidade").value = "";
+    document.getElementById("obs").value = "";
+}
 
-    itensOrcamento.forEach(item => {
-        let linha = document.createElement("tr")
-        linha.innerHTML = `
+// ============================
+// ATUALIZAR TABELA
+// ============================
+function atualizarTabela() {
+    const tabela = document.getElementById("tabelaItens");
+    const linhaInput = tabela.querySelector(".linha-input");
+
+    tabela.innerHTML = "";
+    tabela.appendChild(linhaInput);
+
+    itens.forEach(item => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${item.numero}</td>
             <td>${item.codigo}</td>
             <td>${item.produto}</td>
+            <td>${item.unidade}</td>
             <td>${item.quantidade}</td>
-            <td>${item.observacao}</td>
-        `
-        tabela.appendChild(linha)
-    })
+            <td>${item.obs}</td>
+            <td></td>
+        `;
+
+        tabela.appendChild(row);
+    });
 }
 
-// LIMPAR
-function limparCampos(){
-    document.getElementById("codigo").value = ""
-    document.getElementById("produto").value = ""
-    document.getElementById("quantidade").value = ""
-    document.getElementById("obs").value = ""
-}
+// ============================
+// ENVIAR SOLICITAÇÃO
+// ============================
+function enviarSolicitacao() {
+    const projeto = document.getElementById("projeto").value;
+    const local = document.getElementById("local").value;
+    const data = document.getElementById("dataNecessidade").value;
+    const urgencia = document.getElementById("urgencia").value;
 
-// ENVIAR ORÇAMENTO
-function enviarOrcamento(){
-
-    let numeroPedido = document.getElementById("numeroPedido").value
-    let obra = document.getElementById("obra").value
-    let dataInicio = document.getElementById("dataInicio").value
-    let dataFim = document.getElementById("dataFim").value
-
-    if(!numeroPedido || !obra){
-        alert("Preencha os dados da obra!")
-        return
+    if (!projeto || !local || !data || !urgencia || itens.length === 0) {
+        alert("Preencha tudo!");
+        return;
     }
 
-    if(itensOrcamento.length === 0){
-        alert("Adicione itens antes de enviar")
-        return
-    }
+    const solicitacao = {
+        id: crypto.randomUUID(),
+        projeto,
+        local,
+        data,
+        urgencia,
+        itens,
+        status: "pendente"
+    };
 
-    let novoOrcamento = {
-        id: crypto.randomUUID(), 
-        numeroPedido,
-        obra,
-        dataInicio,
-        dataFim,
-        status: "pendente",
-        itens: [...itensOrcamento]
-    }
+    const lista = JSON.parse(localStorage.getItem("solicitacoes")) || [];
+    lista.push(solicitacao);
 
-    let lista = JSON.parse(localStorage.getItem("orcamentos")) || []
-    lista.push(novoOrcamento)
+    localStorage.setItem("solicitacoes", JSON.stringify(lista));
 
-    localStorage.setItem("orcamentos", JSON.stringify(lista))
+    alert("Solicitação enviada!");
 
-    alert("Orçamento enviado!")
-
-    itensOrcamento = []
-    atualizarTabela()
-}
-
-// MOSTRAR ORÇAMENTOS
-function mostrarOrcamentos(){
-
-    let lista = JSON.parse(localStorage.getItem("orcamentos")) || []
-    let container = document.getElementById("listaOrcamentos")
-
-    container.innerHTML = ""
-
-    lista.forEach(orcamento => {
-
-        let cor = {
-            pendente: "orange",
-            aprovado: "green",
-            rejeitado: "red"
-        }[orcamento.status] || "black"
-
-        let bloco = document.createElement("div")
-
-        bloco.innerHTML = `
-            <h4>Pedido: ${orcamento.numeroPedido}</h4>
-            <p><b>Obra:</b> ${orcamento.obra}</p>
-            <p><b>Status:</b> <span style="color:${cor}">${orcamento.status}</span></p>
-
-            <button onclick="aprovar('${orcamento.id}')">Aprovar</button>
-            <button onclick="rejeitar('${orcamento.id}')">Rejeitar</button>
-
-            <table border="1">
-                <tr>
-                    <th>Código</th>
-                    <th>Produto</th>
-                    <th>Quantidade</th>
-                    <th>Obs</th>
-                </tr>
-                ${orcamento.itens.map(item => `
-                    <tr>
-                        <td>${item.codigo}</td>
-                        <td>${item.produto}</td>
-                        <td>${item.quantidade}</td>
-                        <td>${item.observacao}</td>
-                    </tr>
-                `).join("")}
-            </table>
-            <hr>
-        `
-
-        container.appendChild(bloco)
-    })
-}
-
-// APROVAR / REJEITAR
-function aprovar(id){
-    let lista = JSON.parse(localStorage.getItem("orcamentos")) || []
-
-    lista.forEach(o => {
-        if(o.id === id){
-            o.status = "aprovado"
-        }
-    })
-
-    localStorage.setItem("orcamentos", JSON.stringify(lista))
-    mostrarOrcamentos()
-}
-
-function rejeitar(id){
-    let lista = JSON.parse(localStorage.getItem("orcamentos")) || []
-
-    lista.forEach(o => {
-        if(o.id === id){
-            o.status = "rejeitado"
-        }
-    })
-
-    localStorage.setItem("orcamentos", JSON.stringify(lista))
-    mostrarOrcamentos()
-}
-function limparOrcamentos(){
-    localStorage.removeItem("orcamentos")
-    alert("Dados apagados")
+    itens = [];
+    atualizarTabela();
 }

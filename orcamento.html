@@ -1,36 +1,105 @@
-<h2>Solicitação de Compra</h2>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitação</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 
-<input type="text" id="numeroPedido" placeholder="Número do Pedido">
-<input type="text" id="obra" placeholder="Nome da Obra">
+<body>
 
-<input type="date" id="dataInicio">
-<input type="date" id="dataFim">
+<header class="top-bar">
+    <div>ALPHA</div>
+    <nav>
+        <a href="#">Solicitação de Compra</a>
+        <a href="#">Acompanhamento</a>
+    </nav>
+</header>
 
-<hr>
+<main class="container">
 
-<input type="text" id="produto" oninput="filtrarProdutos()" placeholder="Produto">
-<div id="listaProdutos"></div>
+    <div class="card">
 
-<input type="text" id="codigo" readonly placeholder="Código">
-<input type="number" id="quantidade" placeholder="Quantidade">
-<input type="text" id="obs" placeholder="Observação">
+        <!-- DADOS -->
+        <div class="linha">
+            <div>
+                <label>Projeto</label>
+                <input type="number" id="projeto">
+            </div>
 
-<button onclick="adicionarItem()">Adicionar Item</button>
+            <div>
+                <label>Aplicação</label>
+                <input type="text" id="local">
+            </div>
 
-<table border="1">
-    <thead>
-        <tr>
-            <th>Código</th>
-            <th>Produto</th>
-            <th>Quantidade</th>
-            <th>Obs</th>
-        </tr>
-    </thead>
-    <tbody id="tabelaItens"></tbody>
-</table>
+            <div>
+                <label>Data Necessidade</label>
+                <input type="date" id="dataNecessidade">
+            </div>
 
-<br>
+            <div>
+                <label>Urgência</label>
+                <select id="urgencia">
+                    <option value=""></option>
+                    <option value="baixa">Baixa</option>
+                    <option value="media">Média</option>
+                    <option value="alta">Alta</option>
+                </select>
+            </div>
+        </div>
 
-<button onclick="enviarOrcamento()">Enviar Orçamento</button>
+        <!-- TABELA -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Nº</th>
+                    <th>Cód. Produto</th>
+                    <th>Descrição Produto</th>
+                    <th>Un</th>
+                    <th>Qtd</th>
+                    <th>Obs</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody id="tabelaItens">
+
+                <!-- LINHA INPUT -->
+                <tr class="linha-input">
+                    <td></td>
+
+                    <td>
+                        <input type="text" id="codigo" oninput="buscarPorCodigo()">
+                    </td>
+
+                    <td>
+                        <input type="text" id="produto" oninput="filtrarProdutos()">
+                        <div id="listaProdutos" class="lista-produtos"></div>
+                    </td>
+
+                    <td><input type="text" id="unidade"></td>
+
+                    <td><input type="number" id="quantidade"></td>
+
+                    <td><input type="text" id="obs"></td>
+
+                    <td>
+                        <button onclick="adicionarItem()">+</button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <br>
+
+        <button onclick="enviarSolicitacao()">Enviar Solicitação</button>
+
+    </div>
+
+</main>
 
 <script src="script.js"></script>
+</body>
+</html>
