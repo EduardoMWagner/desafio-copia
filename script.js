@@ -206,3 +206,29 @@ function limparOrcamentos() {
     localStorage.removeItem("solicitacoes");
     mostrarOrcamentos();
 }
+// ============================
+// MOSTRAR ACOMPANHAMENTO
+// ============================
+function mostrarAcompanhamento() {
+    const tabela = document.getElementById("tabelaAcompanhamento");
+
+    if (!tabela) return;
+
+    const lista = JSON.parse(localStorage.getItem("solicitacoes")) || [];
+
+    tabela.innerHTML = "";
+
+    lista.forEach(s => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${s.projeto}</td>
+            <td>${s.local}</td>
+            <td>${s.data}</td>
+            <td>${s.urgencia}</td>
+            <td class="${s.status}">${s.status}</td>
+        `;
+
+        tabela.appendChild(row);
+    });
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acompanhamento</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="top-bar">
+    <div>ALPHA</div>
+    <nav>
+        <a href="orcamento.html">Solicitação</a>
+        <a href="acompanhamento.html">Acompanhamento</a>
+    </nav>
+</header>
+
+<main class="container">
+
+    <div class="card">
+        <h2>Acompanhamento de Solicitações</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Projeto</th>
+                    <th>Local</th>
+                    <th>Data</th>
+                    <th>Urgência</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody id="tabelaAcompanhamento"></tbody>
+        </table>
+    </div>
+
+</main>
+
+<script src="script.js"></script>
+
+<script>
+    window.onload = mostrarAcompanhamento;
+</script>
+
+</body>
+</html>
