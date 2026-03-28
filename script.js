@@ -1,6 +1,4 @@
-// ============================
-// PRODUTOS
-// ============================
+
 const produtos = [
     { nome: "Cimento", codigo: "001", unidade: "SC" },
     { nome: "Areia", codigo: "002", unidade: "M3" },
@@ -10,9 +8,6 @@ const produtos = [
 
 let itens = [];
 
-// ============================
-// BUSCAR POR CÓDIGO
-// ============================
 function buscarPorCodigo() {
     const codigo = document.getElementById("codigo").value;
 
@@ -24,9 +19,6 @@ function buscarPorCodigo() {
     }
 }
 
-// ============================
-// FILTRO POR NOME
-// ============================
 function filtrarProdutos() {
     const input = document.getElementById("produto").value.toLowerCase();
     const lista = document.getElementById("listaProdutos");
@@ -43,9 +35,6 @@ function filtrarProdutos() {
         });
 }
 
-// ============================
-// SELECIONAR PRODUTO
-// ============================
 function selecionarProduto(produto) {
     document.getElementById("produto").value = produto.nome;
     document.getElementById("codigo").value = produto.codigo;
@@ -54,9 +43,6 @@ function selecionarProduto(produto) {
     document.getElementById("listaProdutos").innerHTML = "";
 }
 
-// ============================
-// ADICIONAR ITEM
-// ============================
 function adicionarItem() {
     const codigo = document.getElementById("codigo").value;
     const produto = document.getElementById("produto").value;
@@ -84,9 +70,6 @@ function adicionarItem() {
     limparCamposItem();
 }
 
-// ============================
-// LIMPAR CAMPOS
-// ============================
 function limparCamposItem() {
     document.getElementById("codigo").value = "";
     document.getElementById("produto").value = "";
@@ -95,9 +78,7 @@ function limparCamposItem() {
     document.getElementById("obs").value = "";
 }
 
-// ============================
-// ATUALIZAR TABELA
-// ============================
+
 function atualizarTabela() {
     const tabela = document.getElementById("tabelaItens");
     const linhaInput = tabela.querySelector(".linha-input");
@@ -122,9 +103,6 @@ function atualizarTabela() {
     });
 }
 
-// ============================
-// ENVIAR SOLICITAÇÃO
-// ============================
 function enviarSolicitacao() {
     const projeto = document.getElementById("projeto").value;
     const local = document.getElementById("local").value;
@@ -155,4 +133,76 @@ function enviarSolicitacao() {
 
     itens = [];
     atualizarTabela();
+}
+// ============================
+// MOSTRAR SOLICITAÇÕES (SUPERVISOR)
+// ============================
+function mostrarOrcamentos() {
+    const container = document.getElementById("listaOrcamentos");
+
+    if (!container) return;
+
+    const lista = JSON.parse(localStorage.getItem("solicitacoes")) || [];
+
+    container.innerHTML = "";
+
+    lista.forEach(s => {
+        const div = document.createElement("div");
+
+        div.innerHTML = `
+            <h3>Projeto: ${s.projeto}</h3>
+            <p>Local: ${s.local}</p>
+            <p>Data: ${s.data}</p>
+            <p>Urgência: ${s.urgencia}</p>
+            <p>Status: ${s.status}</p>
+
+            <ul>
+                ${s.itens.map(i => `
+                    <li>
+                        ${i.numero} - ${i.produto} (${i.quantidade})
+                    </li>
+                `).join("")}
+            </ul>
+
+            <button onclick="aprovar('${s.id}')">Aprovar</button>
+            <button onclick="reprovar('${s.id}')">Reprovar</button>
+
+            <hr>
+        `;
+
+        container.appendChild(div);
+    });
+}
+
+// ============================
+// APROVAR / REPROVAR
+// ============================
+function aprovar(id) {
+    atualizarStatus(id, "aprovado");
+}
+
+function reprovar(id) {
+    atualizarStatus(id, "reprovado");
+}
+
+function atualizarStatus(id, status) {
+    let lista = JSON.parse(localStorage.getItem("solicitacoes")) || [];
+
+    lista = lista.map(s => {
+        if (s.id === id) {
+            s.status = status;
+        }
+        return s;
+    });
+
+    localStorage.setItem("solicitacoes", JSON.stringify(lista));
+    mostrarOrcamentos();
+}
+
+// ============================
+// RESET
+// ============================
+function limparOrcamentos() {
+    localStorage.removeItem("solicitacoes");
+    mostrarOrcamentos();
 }
