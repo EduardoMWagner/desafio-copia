@@ -1,0 +1,190 @@
+/* ====== RESET ====== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", Arial, sans-serif;
+}
+
+body {
+    background: #EAE0C8;
+    color: #333;
+}
+
+/* ====== TOP BAR ====== */
+.top-bar {  
+    height: 45px;
+    background: #0A2342;
+    color: #fff;
+    padding: 16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    font-size: 20px;
+}
+#logo {
+    height: 45px;
+    width: 52px;
+}
+.top-bar nav a {
+    color: #fff;
+    margin-left: 24px;
+    text-decoration: none;
+    font-size: 16px;
+    opacity: 0.85;
+    transition: 0.2s;
+}
+
+.top-bar nav a:hover {
+    opacity: 1;
+}
+
+/* ====== CONTAINER ====== */
+.container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* ====== CARD ====== */
+.card {
+    background: #fff;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+/* ====== LINHA DE INPUTS ====== */
+.linha {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.linha div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #0A2342;
+}
+
+input, select {
+    padding: 10px 12px;
+    border: 1px solid #cfd6e3;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #fdfdfd;
+    transition: 0.2s;
+}
+
+input:focus, select:focus {
+    border-color: #0A2342;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(10, 35, 66, 0.15);
+}
+
+/* ====== TABELA ====== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #e9eef5;
+}
+
+thead th {
+    padding: 14px;
+    text-align: left;
+    font-size: 15px;
+    color: #0A2342;
+    font-weight: 600;
+}
+
+tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #d9dfe7;
+}
+
+tbody tr:hover {
+    background: #f5f8fc;
+}
+
+/* ====== INPUTS DENTRO DA TABELA ====== */
+.linha-input input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #cfd6e3;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.linha-input input:focus {
+    border-color: #0A2342;
+    outline: none;
+}
+
+/* ====== BOTÃO "+" ====== */
+.linha-input button {
+    background: #0A2342;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.linha-input button:hover {
+    background: #0d3a6b;
+}
+
+/* ====== BOTÃO ENVIAR ====== */
+button {
+    background: #0A2342;
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #0d3a6b;
+}
+
+/* ====== LISTA DE PRODUTOS (AUTOCOMPLETE) ====== */
+.lista-produtos {
+    position: absolute;
+    background: #fff;
+    border: 1px solid #cfd6e3;
+    border-radius: 6px;
+    margin-top: 4px;
+    width: 250px;
+    max-height: 180px;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    display: none;
+    z-index: 10;
+}
+
+.lista-produtos div {
+    padding: 8px 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.lista-produtos div:hover {
+    background: #f0f4fa;
+}
