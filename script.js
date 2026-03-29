@@ -1,4 +1,29 @@
+// USUÁRIOS
+const usuarios = [
+    {usuario:"engenheiro1", senha:"123", tipo:"usuario"},
+    {usuario:"engenheiro2", senha:"123", tipo:"usuario"},
+    {usuario:"supervisor", senha:"123", tipo:"supervisor"}
+]
 
+// LOGIN
+function login(){
+    let usuarioDigitado = document.getElementById("usuario").value
+    let senhaDigitada = document.getElementById("senha").value
+
+    let usuarioEncontrado = usuarios.find(user =>
+        user.usuario === usuarioDigitado && user.senha === senhaDigitada
+    )
+
+    if(usuarioEncontrado){
+        if(usuarioEncontrado.tipo === "supervisor"){
+            window.location.href = "supervisor.html"
+        }else{
+            window.location.href = "orcamento.html"
+        }
+    }else{
+        alert("Usuário ou senha incorretos")
+    }
+}
 const produtos = [
     { nome: "Cimento", codigo: "001", unidade: "SC" },
     { nome: "Areia", codigo: "002", unidade: "M3" },
