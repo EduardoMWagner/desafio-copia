@@ -1,0 +1,118 @@
+/* ====== RESET ====== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", Arial, sans-serif;
+}
+
+body {
+    background: #EAE0CF;
+    color: #333;
+}
+#logo {
+    height: 45px;
+    width: 52px;
+}
+/* ====== TOP BAR ====== */
+.top-bar {
+    width: 100%;
+    background: #0A2342;
+    color: #fff;
+    padding: 16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.top-bar nav a {
+    color: #fff;
+    margin-left: 24px;
+    text-decoration: none;
+    font-size: 16px;
+    opacity: 0.85;
+    transition: 0.2s;
+}
+
+.top-bar nav a:hover {
+    opacity: 1;
+}
+
+/* ====== CONTAINER ====== */
+.container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* ====== CARD ====== */
+.card {
+    background: #fff;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+.card h2 {
+    margin-bottom: 24px;
+    font-size: 22px;
+    color: #0A2342;
+}
+
+/* ====== TABLE ====== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+thead {
+    background: #e9eef5;
+}
+
+thead th {
+    padding: 14px;
+    text-align: left;
+    font-size: 15px;
+    color: #0A2342;
+    font-weight: 600;
+}
+
+tbody tr {
+    border-bottom: 1px solid #d9dfe7;
+}
+
+tbody td {
+    padding: 12px;
+    font-size: 14px;
+}
+
+tbody tr:hover {
+    background: #f5f8fc;
+}
+
+/* ====== STATUS BADGE ====== */
+.status {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status.pendente {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status.aprovado {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status.reprovado {
+    background: #f8d7da;
+    color: #721c24;
+}
